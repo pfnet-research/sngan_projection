@@ -36,7 +36,7 @@ Consecutive category morphing movies:
 ### Install required python libraries:
 
 `pip install -r requirements.txt`
-### Download ImageNet dataset
+### Download ImageNet dataset:
 Please download ILSVRC2012 dataset from http://image-net.org/download-images
 
 ### Preprocess dataset:
