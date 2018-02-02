@@ -15,7 +15,17 @@ Please see the following installation guide: https://chainermn.readthedocs.io/en
 ### Install required python libraries:
 
 `pip install -r requirements_paper.txt`
-### Download ImageNet dataset
+
+Additionaly we recommend to install the latest [cupy](https://github.com/cupy/cupy):
+```
+pip uninstall cupy
+git clone https://github.com/cupy/cupy.git
+cd cupy
+python setup.py install
+```
+
+
+### Download ImageNet dataset:
 Please download ILSVRC2012 dataset from http://image-net.org/download-images
 
 ### Preprocess dataset:
