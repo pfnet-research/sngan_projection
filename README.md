@@ -4,12 +4,12 @@
 
 # GANs with spectral normalization and projection discriminator
 *NOTE: The setup and example code in this README are for training GANs on **single GPU**.*
-*The models used in the example code are smaller than the ones used in the [papers](https://github.pfidev.jp/miyato/sngans_projection#references).*
-*Please go to [**link**](https://github.pfidev.jp/miyato/sngans_projection/blob/master/README_paper.md) if you are looking for how to reproduce the results in the papers.* 
+*The models are smaller than the ones used in the [papers](https://github.com/pfnet-research/sngan_projection/#references).*
+*Please go to [**link**](https://github.com/pfnet-research/sngan_projection/blob/master/README_paper.md) if you are looking for how to reproduce the results in the papers.* 
 
-<img src="https://github.pfidev.jp/miyato/gan_imagenet/blob/master/demo/dog_and_cat_1x1_short.gif" width="128">
+<img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/dog_and_cat_1x1_long.gif" width="128">
 
-Official Chainer implementation for conditional image generation on ILSCRC2012 dataset (ImageNet) with [spectral normalization][sngans] and [projection discrimiantor][pcgans]. 
+Official Chainer implementation for conditional image generation on ILSVRC2012 dataset (ImageNet) with [spectral normalization][sngans] and [projection discrimiantor][pcgans]. 
 
 ### Demo movies
 
@@ -25,7 +25,7 @@ Consecutive category morphing movies:
 - [Movies](https://drive.google.com/drive/folders/1yhV8_VbOcs2rkiMTstO4RHqp4YRnzg6c?usp=sharing)
 - 4 corner category morph.
 
-<img src="https://github.pfidev.jp/miyato/gan_imagenet/blob/master/demo/interpolated_images_4.png" width="432"> <img src="https://github.pfidev.jp/miyato/gan_imagenet/blob/master/demo/interpolated_images_24.png" width="432">
+<img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_4.png" width="432"> <img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_24.png" width="432">
 
 ### References
 - Takeru Miyato, Toshiki Kataoka, Masanori Koyama, Yuichi Yoshida. *Spectral Normalization for Generative Adversarial Networks*. ICLR2018. [OpenReview][sngans]

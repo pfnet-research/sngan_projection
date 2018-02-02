@@ -1,6 +1,6 @@
 # The code for reproducing the ImageNet results in the ICLR2018 papers; [spectral normalization][sngans] and [projection discrimiantor][pcgans]
 
-Official Chainer implementation for reproducing the results of conditional image generation on ILSCRC2012 dataset (ImageNet) with [spectral normalization][sngans] and [projection discrimiantor][pcgans].
+Official Chainer implementation for reproducing the results of conditional image generation on ILSVRC2012 dataset (ImageNet) with [spectral normalization][sngans] and [projection discrimiantor][pcgans].
 
 ### References
 - Takeru Miyato, Toshiki Kataoka, Masanori Koyama, Yuichi Yoshida. *Spectral Normalization for Generative Adversarial Networks*. ICLR2018. [OpenReview][sngans]
@@ -10,8 +10,8 @@ Official Chainer implementation for reproducing the results of conditional image
 ### Install OpenMPI and NCCL (required for multi-GPU training with [ChainerMN](https://github.com/chainer/chainermn))
 Please see the following installation guide: https://chainermn.readthedocs.io/en/latest/installation/guide.html#requirements
  
- (Note: we provide the single GPU training code [here](https://github.pfidev.jp/miyato/sngans_projection/blob/master/README_paper.md#training), but we have not checked the peformance of the models trained on single GPU. 
- All of the results showed in [the papers](https://github.pfidev.jp/miyato/gan_imagenet#references) are produced by the models trained on 4 GPUs)
+ (Note: we provide the single GPU training code [here](https://github.com/pfnet-research/sngan_projection/blob/master/README_paper.md#training), but we have not checked the peformance of the models trained on single GPU. 
+ All of the results showed in [the papers](https://github.com/pfnet-research/sngan_projection/#references) are produced by the models trained on 4 GPUs)
 ### Install required python libraries:
 
 `pip install -r requirements_paper.txt`
@@ -49,7 +49,7 @@ python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_
 - [generated images at 850K iterations](https://drive.google.com/drive/folders/1-PbUUnrII9vUmcTUwYVYUtiwjiixbXpP)  (Inception score:36.8, Intra class FID:92.4)
 - Examples of generated images at 450K iterations:
 
-![image](https://github.pfidev.jp/miyato/gan_imagenet/blob/master/demo/various_images.jpg)
+![image](https://github.com/pfnet-research/sngan_projection/blob/master/demo/various_images.jpg)
 
 
 ### Spectral normalization + concat discriminator for 128x128 all ImageNet images:
