@@ -23,7 +23,7 @@ Consecutive category morphing movies:
   - [from the model trained on dog and cat images (143 categories), 128px](https://drive.google.com/drive/folders/1yA3xWJqWRvhnhkvJsKF3Xbb-2LO4JrJw?usp=sharing)
 - [Pretrained models](https://drive.google.com/drive/folders/1xZoL48uFOCnTxNGdknEYqE5YX0ZyoUej?usp=sharing)
 - [Movies](https://drive.google.com/drive/folders/1yhV8_VbOcs2rkiMTstO4RHqp4YRnzg6c?usp=sharing)
-- 4 corner category morph.
+- 4 corners category morph.
 
 <img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_4.png" width="432"> <img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_24.png" width="432">
 
