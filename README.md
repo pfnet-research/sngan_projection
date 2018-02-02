@@ -45,6 +45,8 @@ cd datasets
 IMAGENET_TRAIN_DIR=/path/to/imagenet/train/
 PREPROCESSED_DATA_DIR=/path/to/save_dir/
 bash preprocess.sh $IMAGENET_TRAIN_DIR $PREPROCESSED_DATA_DIR
+# Make the list of image-label pairs for all images (1000 categories, 1281167 images).
+python imagenet.py $PREPROCESSED_DATA_DIR
 # Make the list of image-label pairs for dog and cat images (143 categories, 180373 images). 
 puthon imagenet_dog_and_cat.py $PREPROCESSED_DATA_DIR
 ```
