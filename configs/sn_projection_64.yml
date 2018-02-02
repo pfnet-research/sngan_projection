@@ -1,6 +1,6 @@
 batchsize: 64
 iteration: 250000
-iteration_decay_start: 00000
+iteration_decay_start: 200000
 seed: 0
 display_interval: 100
 snapshot_interval: 10000
