@@ -58,15 +58,15 @@ puthon imagenet_dog_and_cat.py $PREPROCESSED_DATA_DIR
 
 ### Spectral normalization + projection discriminator for 64x64 dog and cat images:
 ```
-LOGDIR = /path/to/logdir
-CONFIG = configs/sn_projection_dog_and_cat_64.yml
+LOGDIR=/path/to/logdir
+CONFIG=configs/sn_projection_dog_and_cat_64.yml
 python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
 
 ### Spectral normalization + projection discriminator for 64x64 all ImageNet images:
 ```
-LOGDIR = /path/to/logdir
-CONFIG = configs/sn_projection_64.yml
+LOGDIR=/path/to/logdir
+CONFIG=configs/sn_projection_64.yml
 python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
 
