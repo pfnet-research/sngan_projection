@@ -42,7 +42,7 @@ Please download ILSVRC2012 dataset from http://image-net.org/download-images
 ### Preprocess dataset:
 ```
 cd datasets
-IMAGENET_TRAIN_DIR=/path/to/imagenet/train/
+IMAGENET_TRAIN_DIR=/path/to/imagenet/train/ # path to the parent directory of category directories named "n0*******".
 PREPROCESSED_DATA_DIR=/path/to/save_dir/
 bash preprocess.sh $IMAGENET_TRAIN_DIR $PREPROCESSED_DATA_DIR
 # Make the list of image-label pairs for all images (1000 categories, 1281167 images).
