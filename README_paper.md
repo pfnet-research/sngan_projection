@@ -47,8 +47,8 @@ puthon imagenet_dog_and_cat.py $PREPROCESSED_DATA_DIR
 
 ### Spectral normalization + projection discriminator for 128x128 all ImageNet images:
 ```
-LOGDIR = /path/to/logdir/
-CONFIG = configs/sn_projection_dog_and_cat.yml
+LOGDIR=/path/to/logdir/
+CONFIG=configs/sn_projection_dog_and_cat.yml
 # multi-GPU
 mpiexec -n 4 python train_mn.py --config=configs/sn_projection.yml --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 # single-GPU
