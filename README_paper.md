@@ -64,8 +64,8 @@ python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_
 
 ### Spectral normalization + concat discriminator for 128x128 all ImageNet images:
 ```
-LOGDIR = /path/to/logdir/
-CONFIG = configs/sn_projection_dog_and_cat.yml
+LOGDIR=/path/to/logdir/
+CONFIG=configs/sn_projection_dog_and_cat.yml
 # multi-GPU
 mpiexec -n 4 python train_mn.py --config=configs/sn_concat --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 # single-GPU
@@ -76,8 +76,8 @@ python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_
 
 ### (optional) Spectral normalization + projection discriminator for 128x128 dog and cat images:
 ```
-LOGDIR = /path/to/logdir/
-CONFIG = configs/sn_projection_dog_and_cat.yml
+LOGDIR=/path/to/logdir/
+CONFIG=configs/sn_projection_dog_and_cat.yml
 # multi-GPU
 mpiexec -n 4 python train_mn.py --config=configs/sn_projection_dog_and_cat.yml --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 # single-GPU
