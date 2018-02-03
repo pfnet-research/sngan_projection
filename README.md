@@ -62,6 +62,10 @@ LOGDIR=/path/to/logdir
 CONFIG=configs/sn_projection_dog_and_cat_64.yml
 python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
+- [pretrained model](https://drive.google.com/drive/folders/1KfhQo84fvWUtYQlRVAWf0nswf6X1nawh?usp=sharing)
+- [generated images at 250K iterations](https://drive.google.com/drive/u/1/folders/1RVJCDrSSHaoHKiSP9iCaiiimQoq42rQu)
+- Examples of generated images:
+<img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/images_dog_and_cat_64.jpg">
 
 ### Spectral normalization + projection discriminator for 64x64 all ImageNet images:
 ```
