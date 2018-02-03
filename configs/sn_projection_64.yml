@@ -9,7 +9,7 @@ evaluation_interval: 5000
 models:
   generator:
     fn: gen_models/resnet_64.py
-    name: ResNetGeneratorImageNet
+    name: ResNetGenerator
     args:
       dim_z: 128
       bottom_width: 4

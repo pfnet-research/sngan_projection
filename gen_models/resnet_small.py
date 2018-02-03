@@ -5,9 +5,9 @@ from gen_models.resblocks import Block
 from source.miscs.random_samples import sample_categorical, sample_gaussian
 
 
-class ResNetGeneratorImageNet(chainer.Chain):
+class ResNetGenerator(chainer.Chain):
     def __init__(self, ch=64, dim_z=128, bottom_width=4, activation=F.relu, n_classes=0, distribution="normal"):
-        super(ResNetGeneratorImageNet, self).__init__()
+        super(ResNetGenerator, self).__init__()
         initializer = chainer.initializers.GlorotUniform()
         self.bottom_width = bottom_width
         self.activation = activation
