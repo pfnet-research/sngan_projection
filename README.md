@@ -19,8 +19,8 @@ Consecutive category morphing movies:
 
 ### Other materials
 - [Generated images](https://drive.google.com/drive/folders/1ZzQctZ-loDf9wHJHX90xNN02-_BCYtB-?usp=sharing)
-  - [from the model trained on all ImageNet images (1K categories), 128px](https://drive.google.com/drive/folders/1Mr-fYW0-9QbwKYlIaiFUtgcN6n9qhY8l?usp=sharing)
-  - [from the model trained on dog and cat images (143 categories), 128px](https://drive.google.com/drive/folders/1yA3xWJqWRvhnhkvJsKF3Xbb-2LO4JrJw?usp=sharing)
+  - from the model trained on all ImageNet images (1K categories): [128px](https://drive.google.com/drive/folders/1Mr-fYW0-9QbwKYlIaiFUtgcN6n9qhY8l?usp=sharing)
+  - from the model trained on dog and cat images (143 categories), [[64px]](https://drive.google.com/drive/folders/1RVJCDrSSHaoHKiSP9iCaiiimQoq42rQu?usp=sharing) [[128px]](https://drive.google.com/drive/folders/1yA3xWJqWRvhnhkvJsKF3Xbb-2LO4JrJw?usp=sharing) [[256px]](https://drive.google.com/drive/folders/1ejixDbK5gMtuPltr8kY_dIqMwsqGzt6a?usp=sharing)
 - [Pretrained models](https://drive.google.com/drive/folders/1xZoL48uFOCnTxNGdknEYqE5YX0ZyoUej?usp=sharing)
 - [Movies](https://drive.google.com/drive/folders/1yhV8_VbOcs2rkiMTstO4RHqp4YRnzg6c?usp=sharing)
 - 4 corners category morph.
