@@ -38,8 +38,8 @@ class SNEmbedID(link.Link):
     def __init__(self, in_size, out_size, initialW=None, ignore_label=None, Ip=1, factor=None):
         super(SNEmbedID, self).__init__()
         self.ignore_label = ignore_label
-        self.u = None
         self.Ip = Ip
+        self.factor = factor
         with self.init_scope():
             if initialW is None:
                 initialW = normal.Normal(1.0)
@@ -47,7 +47,6 @@ class SNEmbedID(link.Link):
 
         self.u = np.random.normal(size=(1, in_size)).astype(dtype="f")
         self.register_persistent('u')
-        self.factor = factor
 
     @property
     def W_bar(self):

@@ -46,14 +46,13 @@ class SNLinear(Linear):
     def __init__(self, in_size, out_size, use_gamma=False, nobias=False,
                  initialW=None, initial_bias=None, Ip=1, factor=None):
         self.Ip = Ip
-        self.u = None
         self.use_gamma = use_gamma
+        self.factor = factor
         super(SNLinear, self).__init__(
             in_size, out_size, nobias, initialW, initial_bias
         )
         self.u = np.random.normal(size=(1, out_size)).astype(dtype="f")
         self.register_persistent('u')
-        self.factor = factor
 
     @property
     def W_bar(self):

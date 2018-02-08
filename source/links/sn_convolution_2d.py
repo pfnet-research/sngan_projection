@@ -59,25 +59,26 @@ class SNConvolution2D(Convolution2D):
                  nobias=False, initialW=None, initial_bias=None, use_gamma=False, Ip=1, factor=None):
         self.Ip = Ip
         self.use_gamma = use_gamma
+        self.factor = factor
         super(SNConvolution2D, self).__init__(
             in_channels, out_channels, ksize, stride, pad,
             nobias, initialW, initial_bias)
         self.u = np.random.normal(size=(1, out_channels)).astype(dtype="f")
         self.register_persistent('u')
-        self.factor = factor
 
     @property
     def W_bar(self):
         """
         Spectrally Normalized Weight
         """
-        xp = cuda.get_array_module(self.W.data)
         W_mat = self.W.reshape(self.W.shape[0], -1)
         sigma, _u, _ = max_singular_value(W_mat, self.u, self.Ip)
         if self.factor:
             sigma = sigma / self.factor
         sigma = broadcast_to(sigma.reshape((1, 1, 1, 1)), self.W.shape)
-        self.u[:] = _u
+        if chainer.config.train:
+            # Update estimated 1st singular vector
+            self.u[:] = _u
         if hasattr(self, 'gamma'):
             return broadcast_to(self.gamma, self.W.shape) * self.W / sigma
         else:
