@@ -6,7 +6,7 @@ import scipy.misc
 
 
 class ImageNetDataset(chainer.dataset.DatasetMixin):
-    def __init__(self, path, root, size=128, resize_method='bilinear', augmentation=False, crop_ratio=0.9):
+    def __init__(self, path, root, size=128, resize_method='bilinear', augmentation=False, crop_ratio=1.0):
         self.base = chainer.datasets.LabeledImageDataset(path, root)
         self.size = size
         self.resize_method = resize_method
