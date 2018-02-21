@@ -44,6 +44,7 @@ def max_singular_value_fully_differentiable(W, u=None, Ip=1):
     _u = u
     for _ in range(Ip):
         _v = F.normalize(F.matmul(_u, W), eps=1e-12)
+        _u = F.normalize(F.matmul(_v, F.transpose(W)), eps=1e-12)
     _u = F.matmul(_v, F.transpose(W))
     norm = F.sqrt(F.sum(_u ** 2))
     return norm, _l2normalize(_u.data), _v
