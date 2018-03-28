@@ -60,7 +60,7 @@ class CategoricalConditionalBatchNormalization(ConditionalBatchNormalization):
             initial_beta.dtype = dtype
             self.betas = EmbedID(n_cat, size, initialW=initial_beta)
 
-    def __call__(self, x, c, **kwargs):
+    def __call__(self, x, c, finetune=False, **kwargs):
         """__call__(self, x, c, finetune=False)
         Invokes the forward propagation of BatchNormalization.
         In training mode, the BatchNormalization computes moving averages of
@@ -80,22 +80,17 @@ class CategoricalConditionalBatchNormalization(ConditionalBatchNormalization):
                 statistics.
         """
         weights, = argument.parse_kwargs(kwargs, ('weights', None))
-        if isinstance(c, (list, tuple)):
-            gamma_cs = []
-            beta_cs = []
-            for _c, w in zip(c, weights):
-                _gamma_c = self.gammas(_c)
-                _beta_c = self.betas(_c)
-                # print(F.expand_dims(w, 1).shape, _gamma_c.shape)
-                # print(F.broadcast_to(F.expand_dims(w, 1), _gamma_c).shape)
-                gamma_cs.append(F.broadcast_to(F.expand_dims(w, 1), _gamma_c.shape) * _gamma_c)
-                beta_cs.append(F.broadcast_to(F.expand_dims(w, 1), _beta_c.shape) * _beta_c)
-            gamma_c = sum(gamma_cs)
-            beta_c = sum(beta_cs)
+        if c.ndim == 2 and weights is not None:
+            _gamma_c = self.gammas(c)
+            _beta_c = self.betas(c)
+            _gamma_c = F.broadcast_to(F.expand_dims(weights, 2), _gamma_c.shape) * _gamma_c 
+            _beta_c = F.broadcast_to(F.expand_dims(weights, 2), _beta_c.shape) * _beta_c
+            gamma_c = F.sum(_gamma_c, 1) 
+            beta_c = F.sum(_beta_c, 1) 
         else:
             gamma_c = self.gammas(c)
             beta_c = self.betas(c)
-        return super(CategoricalConditionalBatchNormalization, self).__call__(x, gamma_c, beta_c)
+        return super(CategoricalConditionalBatchNormalization, self).__call__(x, gamma_c, beta_c, **kwargs)
 
 
 def start_finetuning(self):

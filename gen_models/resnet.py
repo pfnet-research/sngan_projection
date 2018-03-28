@@ -24,22 +24,22 @@ class ResNetGenerator(chainer.Chain):
             self.b7 = L.BatchNormalization(ch)
             self.l7 = L.Convolution2D(ch, 3, ksize=3, stride=1, pad=1, initialW=initializer)
 
-    def __call__(self, batchsize=64, z=None, y=None):
+    def __call__(self, batchsize=64, z=None, y=None, **kwargs):
         if z is None:
             z = sample_gaussian(self.dim_z, batchsize, distribution=self.distribution, xp=self.xp)
         if y is None:
             y = sample_categorical(self.n_classes, batchsize, distribution="uniform",
                                    xp=self.xp) if self.n_classes > 0 else None
         if (y is not None) and z.shape[0] != y.shape[0]:
-            raise Exception('z.shape[0] != y.shape[0], z.shape[0]={}, y.shape[0]={}'.format(z.shape[0], y.shape[0]))
+            raise ValueError('z.shape[0] != y.shape[0], z.shape[0]={}, y.shape[0]={}'.format(z.shape[0], y.shape[0]))
         h = z
         h = self.l1(h)
         h = F.reshape(h, (h.shape[0], -1, self.bottom_width, self.bottom_width))
-        h = self.block2(h, y)
-        h = self.block3(h, y)
-        h = self.block4(h, y)
-        h = self.block5(h, y)
-        h = self.block6(h, y)
+        h = self.block2(h, y, **kwargs)
+        h = self.block3(h, y, **kwargs)
+        h = self.block4(h, y, **kwargs)
+        h = self.block5(h, y, **kwargs)
+        h = self.block6(h, y, **kwargs)
         h = self.b7(h)
         h = self.activation(h)
         h = F.tanh(self.l7(h))
