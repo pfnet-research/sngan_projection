@@ -74,15 +74,24 @@ CONFIG=configs/sn_projection_64.yml
 python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
 
-## Evaluation
+## Evaluation examples
+### Generate images
+```
+python evaluations/gen_images.py --config=$CONFIG --snapshot=${LOGDIR}/ResNetGenerator_<iterations>.npz --results_dir=${LOGDIR}/gen_images
+```
+
+### Generate category morphing images
+Regarding the index-category correspondence, please see [1K ImageNet](https://drive.google.com/drive/u/1/folders/1Mr-fYW0-9QbwKYlIaiFUtgcN6n9qhY8l), [143 dog and cat ImageNet](https://drive.google.com/drive/u/1/folders/1yA3xWJqWRvhnhkvJsKF3Xbb-2LO4JrJw).
+```
+python evaluations/gen_interpolated_images.py --n_zs=10 --n_intp=10 --classes $CATEGORY1 $CATEGORY2 --config=$CONFIG --snapshot=${LOGDIR}/ResNetGenerator_<iterations>.npz --results_dir=${LOGDIR}/gen_morphing_images
+```
+
+
 ### Calculate inception score (with the original OpenAI implementation)
 ```
 python evaluations/calc_inception_score.py --config=$CONFIG --snapshot=${LOGDIR}/ResNetGenerator_<iterations>.npz --results_dir=${LOGDIR}/inception_score --splits=10 --tf
 ```
 
-### Generate images and save them in `${LOGDIR}/gen_images`
-```
-python evaluations/gen_images.py --config=$CONFIG --snapshot=${LOGDIR}/ResNetGenerator_<iterations>.npz --results_dir=${LOGDIR}/gen_images
-```
+
 
 
