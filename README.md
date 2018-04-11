@@ -25,7 +25,7 @@ Consecutive category morphing movies:
 - [Movies](https://drive.google.com/drive/folders/1yhV8_VbOcs2rkiMTstO4RHqp4YRnzg6c?usp=sharing)
 - 4 corners category morph.
 
-<img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_4.png" width="432"> <img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_24.png" width="432">
+<img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_24.png" width="432"> <img src="https://github.com/pfnet-research/sngan_projection/blob/master/demo/interpolated_images_3x3.png" width="432"> 
 
 ### References
 - Takeru Miyato, Toshiki Kataoka, Masanori Koyama, Yuichi Yoshida. *Spectral Normalization for Generative Adversarial Networks*. ICLR2018. [OpenReview][sngans]
