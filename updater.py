@@ -3,7 +3,7 @@ import numpy as np
 import chainer
 import chainer.functions as F
 from chainer import Variable
-from source.miscs.random_samples import sample_gaussian, sample_categorical
+from source.miscs.random_samples import sample_continuous, sample_categorical
 
 # Classic Adversarial Loss
 def loss_dcgan_dis(dis_fake, dis_real):

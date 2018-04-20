@@ -2,7 +2,7 @@ import chainer
 import chainer.links as L
 from chainer import functions as F
 from gen_models.resblocks import Block
-from source.miscs.random_samples import sample_categorical, sample_gaussian
+from source.miscs.random_samples import sample_categorical, sample_continuous
 
 
 class ResNetGenerator(chainer.Chain):
@@ -26,7 +26,7 @@ class ResNetGenerator(chainer.Chain):
 
     def __call__(self, batchsize=64, z=None, y=None, **kwargs):
         if z is None:
-            z = sample_gaussian(self.dim_z, batchsize, distribution=self.distribution, xp=self.xp)
+            z = sample_continuous(self.dim_z, batchsize, distribution=self.distribution, xp=self.xp)
         if y is None:
             y = sample_categorical(self.n_classes, batchsize, distribution="uniform",
                                    xp=self.xp) if self.n_classes > 0 else None
