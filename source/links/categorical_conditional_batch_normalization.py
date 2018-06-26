@@ -44,9 +44,9 @@ class CategoricalConditionalBatchNormalization(ConditionalBatchNormalization):
     """
 
     def __init__(self, size, n_cat, decay=0.9, eps=2e-5, dtype=numpy.float32,
-                 initial_gamma=None, initial_beta=None, comm=None):
+                 initial_gamma=None, initial_beta=None):
         super(CategoricalConditionalBatchNormalization, self).__init__(
-            size=size, n_cat=n_cat, decay=decay, eps=eps, dtype=dtype, comm=comm)
+            size=size, n_cat=n_cat, decay=decay, eps=eps, dtype=dtype)
 
         with self.init_scope():
             if initial_gamma is None:

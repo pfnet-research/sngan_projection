@@ -11,9 +11,6 @@ from chainer import variable
 from chainer.links import EmbedID
 import chainer.functions as F
 
-from chainermn.functions.batch_normalization import \
-    MultiNodeBatchNormalizationFunction
-
 
 class ConditionalBatchNormalization(chainer.Chain):
     """
@@ -45,7 +42,7 @@ class ConditionalBatchNormalization(chainer.Chain):
             to the batch variances.
     """
 
-    def __init__(self, size, n_cat, decay=0.9, eps=2e-5, dtype=numpy.float32, comm=None):
+    def __init__(self, size, n_cat, decay=0.9, eps=2e-5, dtype=numpy.float32):
         super(ConditionalBatchNormalization, self).__init__()
         self.avg_mean = numpy.zeros(size, dtype=dtype)
         self.register_persistent('avg_mean')
@@ -56,7 +53,6 @@ class ConditionalBatchNormalization(chainer.Chain):
         self.decay = decay
         self.eps = eps
         self.n_cat = n_cat
-        self.comm = comm
 
     def __call__(self, x, gamma, beta, **kwargs):
         """__call__(self, x, c, finetune=False)
@@ -93,15 +89,8 @@ class ConditionalBatchNormalization(chainer.Chain):
                 decay = 1. - 1. / self.N
             else:
                 decay = self.decay
-            if self.comm is not None:
-                func = MultiNodeBatchNormalizationFunction(
-                    self.comm, self.eps, self.avg_mean, self.avg_var, decay)
-                ret = func(x, _gamma, _beta)
-                self.avg_mean[:] = func.running_mean
-                self.avg_var[:] = func.running_var
-            else:
-                ret = chainer.functions.batch_normalization(x, _gamma, _beta, eps=self.eps, running_mean=self.avg_mean,
-                                                            running_var=self.avg_var, decay=decay)
+            ret = chainer.functions.batch_normalization(x, _gamma, _beta, eps=self.eps, running_mean=self.avg_mean,
+                                                        running_var=self.avg_var, decay=decay)
         else:
             # Use running average statistics or fine-tuned statistics.
             mean = variable.Variable(self.avg_mean)
