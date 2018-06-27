@@ -15,7 +15,7 @@ sys.path.append(os.path.join(base, '../'))
 from evaluation import gen_images_with_condition
 import yaml
 import source.yaml_utils as yaml_utils
-from source.miscs.random_samples import sample_gaussian
+from source.miscs.random_samples import sample_continuous
 
 
 def load_models(config):
