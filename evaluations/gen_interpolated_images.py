@@ -1,6 +1,6 @@
 """
 Example:
-python evaluations/gen_interpolated_images.py --n_zs=10 --n_intp=10 --snapshot=ResNetGeneratorImageNet_850000.npz --config=configs/sn_projection.yml --classes 986 989
+python evaluations/gen_interpolated_images.py --n_zs=10 --n_intp=10 --snapshot=ResNetGenerator_850000.npz --config=configs/sn_projection.yml --classes 986 989
 """
 
 import os, sys, time
