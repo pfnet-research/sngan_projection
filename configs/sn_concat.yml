@@ -3,6 +3,7 @@ iteration: 450000
 iteration_decay_start: 400000
 seed: 0
 display_interval: 100
+progressbar_interval: 100
 snapshot_interval: 10000
 evaluation_interval: 5000
 

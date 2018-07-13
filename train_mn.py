@@ -130,7 +130,7 @@ def main():
         trainer.extend(calc_inception(gen, n_ims=5000, splits=1, path=args.inception_model_path),
                        trigger=(config.evaluation_interval, 'iteration'),
                        priority=extension.PRIORITY_WRITER)
-        trainer.extend(extensions.ProgressBar(update_interval=10))
+        trainer.extend(extensions.ProgressBar(update_interval=config.progressbar_interval))
     ext_opt_gen = extensions.LinearShift('alpha', (config.adam['alpha'], 0.),
                                          (config.iteration_decay_start, config.iteration), opt_gen)
     ext_opt_dis = extensions.LinearShift('alpha', (config.adam['alpha'], 0.),
