@@ -54,6 +54,13 @@ if __name__ == "__main__":
     import glob, os, sys
 
     root_path = sys.argv[1]
+    if len(sys.argv) == 4:
+        root_path_val = sys.argv[2]
+        anno_path = sys.argv[3]
+        preprocess_val = True
+    else:
+        preprocess_val = False
+
     dirname_to_label = {}
     with open('dirname_to_label.txt', 'r') as f:
         for line in f:
@@ -74,3 +81,23 @@ if __name__ == "__main__":
     print("Num of examples:{}".format(count))
     n_image_list = np.array(n_image_list, np.str)
     np.savetxt('image_list.txt', n_image_list, fmt="%s")
+    
+    if preprocess_val:
+        count = 0
+        n_image_list = []
+        import xml.etree.ElementTree as et
+        filenames = glob.glob(root_path_val + '/*.JPEG')
+        for filename in filenames:
+            filename = filename.split('/')
+            image_name = filename[-1].strip('.JPEG')
+            e = et.parse(os.path.join(anno_path, image_name+'.xml')).getroot()
+            dirname = e.findall('object')[0].findall('name')[0].text
+            label = int(dirname_to_label[dirname])
+            n_image_list.append([os.path.join(filename[-1]), label])
+            count += 1
+            if count % 1000 == 0:
+                print(count)
+        print("Num of examples:{}".format(count))
+        n_image_list = np.array(n_image_list, np.str)
+        np.savetxt('image_list_val.txt', n_image_list, fmt="%s")
+
