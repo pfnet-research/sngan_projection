@@ -5,7 +5,7 @@ import chainer
 
 base = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(base, '../'))
-from evaluation import gen_images
+from extentions_for_eval import gen_images
 import yaml
 import source.yaml_utils as yaml_utils
 
@@ -46,7 +46,7 @@ def main():
         mean, std = inception_score.get_inception_score(ims, args.splits)
         print(mean, std)
     else:
-        from evaluation import load_inception_model
+        from extentions_for_eval import load_inception_model
         from source.inception.inception_score import inception_score, Inception
         model = load_inception_model(args.inception_model_path)
         mean, std = inception_score(model, ims, splits=args.splits)

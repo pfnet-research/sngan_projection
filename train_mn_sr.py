@@ -12,7 +12,7 @@ import multiprocessing
 
 sys.path.append(os.path.dirname(__file__))
 
-from extentions_for_eval import sample_generate_conditional, sample_generate_light, calc_inception
+from extentions_for_eval import sample_generate_sr, sample_generate_light_sr
 import source.yaml_utils as yaml_utils
 
 
@@ -43,6 +43,12 @@ def load_models(config):
     return gen, dis
 
 
+def load_dataset_eval(config):
+    dataset = yaml_utils.load_module(config.dataset_eval['dataset_fn'],
+                                     config.dataset_eval['dataset_name'])
+    return dataset(**config.dataset_eval['args'])
+
+
 def make_optimizer(model, comm, alpha=0.0002, beta1=0., beta2=0.9):
     optimizer = chainermn.create_multi_node_optimizer(
         chainer.optimizers.Adam(alpha=alpha, beta1=beta1, beta2=beta2), comm)
@@ -53,11 +59,10 @@ def make_optimizer(model, comm, alpha=0.0002, beta1=0., beta2=0.9):
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--config_path', type=str, default='configs/base.yml', help='path to config file')
-    parser.add_argument('--data_dir', type=str, default='./data/imagenet')
+    parser.add_argument('--data_dir', type=str, default='./data/imagenet/cropped-train256')
+    parser.add_argument('--data_dir_eval', type=str, default='./data/imagenet/cropped-val256')
     parser.add_argument('--results_dir', type=str, default='./results/gans',
                         help='directory to save the results to')
-    parser.add_argument('--inception_model_path', type=str, default='./datasets/inception_model',
-                        help='path to the inception model')
     parser.add_argument('--snapshot', type=str, default='',
                         help='path to the snapshot')
     parser.add_argument('--loaderjob', type=int,
@@ -88,6 +93,7 @@ def main():
     opts = {"opt_gen": opt_gen, "opt_dis": opt_dis}
     # Dataset
     config['dataset']['args']['root'] = args.data_dir
+    config['dataset_eval']['args']['root'] = args.data_dir_eval
     if comm.rank == 0:
         dataset = yaml_utils.load_dataset(config)
     else:
@@ -98,6 +104,8 @@ def main():
     multiprocessing.set_start_method('forkserver')
     iterator = chainer.iterators.MultiprocessIterator(dataset, config.batchsize,
                                                       n_processes=args.loaderjob)
+    dataset_eval = load_dataset_eval(config)
+    eval_iter = chainer.iterators.SerialIterator(dataset_eval, 5, shuffle=False)
     kwargs = config.updater['args'] if 'args' in config.updater else {}
     kwargs.update({
         'models': models,
@@ -111,7 +119,7 @@ def main():
     if comm.rank == 0:
         create_result_dir(out, args.config_path, config)
     trainer = training.Trainer(updater, (config.iteration, 'iteration'), out=out)
-    report_keys = ["loss_dis", "loss_gen", "inception_mean", "inception_std"]
+    report_keys = ["loss_dis", "loss_gen"]
     if comm.rank == 0:
         # Set up logging
         trainer.extend(extensions.snapshot(), trigger=(config.snapshot_interval, 'iteration'))
@@ -121,14 +129,11 @@ def main():
         trainer.extend(extensions.LogReport(keys=report_keys,
                                             trigger=(config.display_interval, 'iteration')))
         trainer.extend(extensions.PrintReport(report_keys), trigger=(config.display_interval, 'iteration'))
-        trainer.extend(sample_generate_conditional(gen, out, n_classes=gen.n_classes),
+        trainer.extend(sample_generate_sr(gen, eval_iter, out),
                        trigger=(config.evaluation_interval, 'iteration'),
                        priority=extension.PRIORITY_WRITER)
-        trainer.extend(sample_generate_light(gen, out, rows=10, cols=10),
+        trainer.extend(sample_generate_light_sr(gen, eval_iter, out),
                        trigger=(config.evaluation_interval // 10, 'iteration'),
-                       priority=extension.PRIORITY_WRITER)
-        trainer.extend(calc_inception(gen, n_ims=5000, splits=1, path=args.inception_model_path),
-                       trigger=(config.evaluation_interval, 'iteration'),
                        priority=extension.PRIORITY_WRITER)
         trainer.extend(extensions.ProgressBar(update_interval=config.progressbar_interval))
     ext_opt_gen = extensions.LinearShift('alpha', (config.adam['alpha'], 0.),

@@ -10,7 +10,7 @@ from chainer.training import extensions
 
 sys.path.append(os.path.dirname(__file__))
 
-from evaluation import sample_generate_conditional, sample_generate_light, calc_inception
+from extentions_for_eval import sample_generate_conditional, sample_generate_light, calc_inception
 import source.yaml_utils as yaml_utils
 
 

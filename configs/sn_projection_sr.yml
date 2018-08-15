@@ -1,0 +1,52 @@
+batchsize: 16
+iteration: 100000
+iteration_decay_start: 50000
+seed: 0
+display_interval: 100
+progressbar_interval: 100
+snapshot_interval: 10000
+evaluation_interval: 10000
+
+models:
+  generator:
+    fn: gen_models/resnet_sr.py
+    name: ResNetGeneratorSR
+    args:
+      dim_noise: 128
+      ch: 64
+
+  discriminator:
+      fn: dis_models/snresnet_sr.py
+      name: SNResNetProjectionDiscriminatorSR
+      args:
+        ch: 64
+
+dataset:
+  dataset_fn: datasets/imagenet_sr.py
+  dataset_name: ImageNetDatasetSR
+  args:
+    path: datasets/image_list.txt
+    lr_size: 32
+    hr_size: 128
+    resize_method: bilinear
+
+dataset_eval:
+  dataset_fn: datasets/imagenet_sr.py
+  dataset_name: ImageNetDatasetSR
+  args:
+    path: datasets/image_list_val.txt
+    lr_size: 32
+    hr_size: 128
+    resize_method: bilinear
+
+adam:
+  alpha: 0.0002
+  beta1: 0.0
+  beta2: 0.9
+
+updater:
+  fn: updater_sr.py
+  name: Updater
+  args:
+    n_dis: 5
+    loss_type: hinge

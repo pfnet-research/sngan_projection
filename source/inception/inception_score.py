@@ -103,7 +103,7 @@ def inception_accuracy(model, ims, labels, batch_size=100, splits=10):
         print('batch_size:{}, n_ims{}, n_batches{}'.format(batch_size, n, n_batches))
         print('Calculating inception accuracy...')
         ys = inception_forward(model, ims, batch_size)
-    return F.accuracy(ys, labels).data
+    return F.accuracy(chainer.cuda.to_cpu(ys), labels).data
 
 
 class Mixed(Chain):

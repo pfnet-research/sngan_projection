@@ -48,9 +48,9 @@ python imagenet_dog_and_cat.py $PREPROCESSED_DATA_DIR
 ### Spectral normalization + projection discriminator for 128x128 all ImageNet images:
 ```
 LOGDIR=/path/to/logdir/
-CONFIG=configs/sn_projection_dog_and_cat.yml
+CONFIG=configs/sn_projection_128.yml
 # multi-GPU
-mpiexec -n 4 python train_mn.py --config=configs/sn_projection.yml --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
+mpiexec -n 4 python train_mn.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 # single-GPU
 python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
@@ -65,9 +65,9 @@ python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_
 ### Spectral normalization + concat discriminator for 128x128 all ImageNet images:
 ```
 LOGDIR=/path/to/logdir/
-CONFIG=configs/sn_projection_dog_and_cat.yml
+CONFIG=configs/sn_concat_128.yml
 # multi-GPU
-mpiexec -n 4 python train_mn.py --config=configs/sn_concat --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
+mpiexec -n 4 python train_mn.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 # single-GPU
 python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
@@ -77,11 +77,11 @@ python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_
 ### (optional) Spectral normalization + projection discriminator for 128x128 dog and cat images:
 ```
 LOGDIR=/path/to/logdir/
-CONFIG=configs/sn_projection_dog_and_cat.yml
+CONFIG=configs/sn_projection_dog_and_cat_128.yml
 # multi-GPU
-mpiexec -n 4 python train_mn.py --config=configs/sn_projection_dog_and_cat.yml --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
+mpiexec -n 4 python train_mn.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 # single-GPU
-python train.py --config=$CONFIG  --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
+python train.py --config=$CONFIG --results_dir=$LOGDIR --data_dir=$PREPROCESSED_DATA_DIR
 ```
 - [pretrained models](https://drive.google.com/drive/folders/1wKMG6ontP8ZKdBYOA8l-z_JQUUpuA7XA) 
 - [generated images](https://drive.google.com/drive/folders/1yA3xWJqWRvhnhkvJsKF3Xbb-2LO4JrJw?usp=sharing) (Inception score: 28.2)

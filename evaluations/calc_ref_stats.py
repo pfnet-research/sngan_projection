@@ -5,7 +5,7 @@ import chainer
 
 base = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(base, '../'))
-from evaluation import load_inception_model
+from extentions_for_eval import load_inception_model
 
 import scipy.ndimage as ndimage
 from scipy.misc import imresize
@@ -54,7 +54,7 @@ def main():
         import source.inception.inception_score_tf
         from source.inception.inception_score_tf import get_mean_and_cov as get_mean_cov
     else:
-        from evaluation import get_mean_cov
+        from extentions_for_eval import get_mean_cov
         model = load_inception_model(args.inception_model_path)
     for c in range(args.n_classes):
         print('label:{}'.format(c))

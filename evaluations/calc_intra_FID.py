@@ -5,10 +5,10 @@ import chainer
 
 base = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(base, '../'))
-from evaluation import gen_images, gen_images_with_condition, load_inception_model
+from extentions_for_eval import gen_images, gen_images_with_condition, load_inception_model
 import yaml
 import source.yaml_utils as yaml_utils
-from evaluation import FID
+from extentions_for_eval import FID
 
 
 def load_models(config):
@@ -44,7 +44,7 @@ def main():
         import source.inception.inception_score_tf
         from source.inception.inception_score_tf import get_mean_and_cov as get_mean_cov
     else:
-        from evaluation import get_mean_cov
+        from extentions_for_eval import get_mean_cov
         model = load_inception_model(args.inception_model_path)
     for c in range(args.class_start_from, args.n_classes):
         print("class:{}".format(c))

@@ -16,7 +16,7 @@ def upsample_conv(x, conv):
 
 class Block(chainer.Chain):
     def __init__(self, in_channels, out_channels, hidden_channels=None, ksize=3, pad=1,
-                 activation=F.relu, upsample=False, n_classes=0):
+                 activation=F.relu, upsample=False, n_classes=0, dim_noise=0):
         super(Block, self).__init__()
         initializer = chainer.initializers.GlorotUniform(math.sqrt(2))
         initializer_sc = chainer.initializers.GlorotUniform()
@@ -25,8 +25,10 @@ class Block(chainer.Chain):
         self.learnable_sc = in_channels != out_channels or upsample
         hidden_channels = out_channels if hidden_channels is None else hidden_channels
         self.n_classes = n_classes
+        self.dim_noise = dim_noise
         with self.init_scope():
-            self.c1 = L.Convolution2D(in_channels, hidden_channels, ksize=ksize, pad=pad, initialW=initializer)
+            self.c1 = L.Convolution2D(in_channels + self.dim_noise, hidden_channels, ksize=ksize, pad=pad,
+                                      initialW=initializer)
             self.c2 = L.Convolution2D(hidden_channels, out_channels, ksize=ksize, pad=pad, initialW=initializer)
             if n_classes > 0:
                 self.b1 = CategoricalConditionalBatchNormalization(in_channels, n_cat=n_classes)
@@ -37,10 +39,13 @@ class Block(chainer.Chain):
             if self.learnable_sc:
                 self.c_sc = L.Convolution2D(in_channels, out_channels, ksize=1, pad=0, initialW=initializer_sc)
 
-    def residual(self, x, y=None, z=None, **kwargs):
+    def residual(self, x, y=None, **kwargs):
         h = x
         h = self.b1(h, y, **kwargs) if y is not None else self.b1(h, **kwargs)
         h = self.activation(h)
+        if self.dim_noise > 0:
+            z = self.xp.random.normal(size=[h.shape[0], self.dim_noise, h.shape[2], h.shape[3]]).astype(self.xp.float32)
+            h = F.concat([h, z], axis=1)
         h = upsample_conv(h, self.c1) if self.upsample else self.c1(h)
         h = self.b2(h, y, **kwargs) if y is not None else self.b2(h, **kwargs)
         h = self.activation(h)
@@ -54,5 +59,5 @@ class Block(chainer.Chain):
         else:
             return x
 
-    def __call__(self, x, y=None, z=None, **kwargs):
-        return self.residual(x, y, z, **kwargs) + self.shortcut(x)
+    def __call__(self, x, y=None, **kwargs):
+        return self.residual(x, y, **kwargs) + self.shortcut(x)

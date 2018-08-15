@@ -1,4 +1,4 @@
-batchsize: 8
+batchsize: 16
 iteration: 450000
 iteration_decay_start: 400000
 seed: 0
@@ -9,20 +9,20 @@ evaluation_interval: 5000
 
 models:
   generator:
-    fn: gen_models/resnet_dog_and_cat_256.py
+    fn: gen_models/resnet_dog_and_cat_128.py
     name: ResNetGenerator
     args:
       dim_z: 128
       bottom_width: 4
-      ch: 32
+      ch: 64
       n_classes: 143
 
 
   discriminator:
-      fn: dis_models/snresnet_dog_and_cat_256.py
+      fn: dis_models/snresnet_dog_and_cat_128.py
       name: SNResNetProjectionDiscriminator
       args:
-        ch: 32
+        ch: 64
         n_classes: 143
 
 dataset:
@@ -30,7 +30,7 @@ dataset:
   dataset_name: ImageNetDogAndCatDataset
   args:
     path: datasets/image_list_dog_and_cat.txt
-    size: 256
+    size: 128
     resize_method: bilinear
     augmentation: True
 
@@ -44,6 +44,6 @@ updater:
   name: Updater
   args:
     n_dis: 5
-    n_gen_samples: 16
+    n_gen_samples: 32
     conditional: True
     loss_type: hinge

@@ -12,7 +12,7 @@ from PIL import Image
 
 base = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(os.path.join(base, '../'))
-from evaluation import gen_images_with_condition
+from extentions_for_eval import gen_images_with_condition
 import yaml
 import source.yaml_utils as yaml_utils
 from source.miscs.random_samples import sample_continuous
