@@ -71,6 +71,7 @@ def main():
     device = comm.intra_rank
     chainer.cuda.get_device_from_id(device).use()
     print("init")
+    multiprocessing.set_start_method('forkserver')
     if comm.rank == 0:
         print('==========================================')
         print('Using {} communicator'.format(args.communicator))
@@ -95,7 +96,6 @@ def main():
         dataset = None
     dataset = chainermn.scatter_dataset(dataset, comm)
     # Iterator
-    multiprocessing.set_start_method('forkserver')
     iterator = chainer.iterators.MultiprocessIterator(dataset, config.batchsize,
                                                       n_processes=args.loaderjob)
     kwargs = config.updater['args'] if 'args' in config.updater else {}
