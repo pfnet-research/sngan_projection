@@ -1,0 +1,46 @@
+batchsize: 64
+iteration: 50000
+iteration_decay_start: 0
+seed: 0
+display_interval: 100
+progressbar_interval: 100
+snapshot_interval: 10000
+evaluation_interval: 1000
+
+models:
+  generator:
+    fn: gen_models/resnet_32.py
+    name: ResNetGenerator32
+    args:
+      dim_z: 128
+      bottom_width: 4
+      ch: 256
+      n_classes: 10
+
+
+  discriminator:
+      fn: dis_models/snresnet_32.py
+      name: SNResNetDiscriminator32
+      args:
+        ch: 128
+        n_classes: 10
+
+dataset:
+  dataset_fn: datasets/cifar10.py
+  dataset_name: Cifar10Dataset
+  args:
+    test: False
+
+adam:
+  alpha: 0.0002
+  beta1: 0.0
+  beta2: 0.9
+
+updater:
+  fn: updater.py
+  name: Updater
+  args:
+    n_dis: 5
+    n_gen_samples: 64
+    conditional: True
+    loss_type: hinge
