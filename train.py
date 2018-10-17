@@ -75,7 +75,8 @@ def main():
         dis, alpha=config.adam['alpha'], beta1=config.adam['beta1'], beta2=config.adam['beta2'])
     opts = {"opt_gen": opt_gen, "opt_dis": opt_dis}
     # Dataset
-    config['dataset']['args']['root'] = args.data_dir
+    if config['dataset']['dataset_name'] != 'Cifar10Dataset': # Cifar10 dataset handler does not take "root" as argument.
+        config['dataset']['args']['root'] = args.data_dir
     dataset = yaml_utils.load_dataset(config)
     # Iterator
     iterator = chainer.iterators.MultiprocessIterator(
