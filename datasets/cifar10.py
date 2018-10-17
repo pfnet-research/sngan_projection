@@ -1,9 +1,11 @@
 import chainer
+import numpy as np
 from chainer.dataset import dataset_mixin
 
-class Cifar10Dataset(dataset_mixin.DatasetMixin):
+
+class CIFAR10Dataset(dataset_mixin.DatasetMixin):
     def __init__(self, test=False):
-        d_train, d_test = chainer.datasets.get_cifar10(ndim=3, withlabel=True, scale=1.0)
+        d_train, d_test = chainer.datasets.get_cifar10(ndim=3, withlabel=True, scale=255)
         if test:
             self.dset = d_test
         else:
@@ -15,5 +17,6 @@ class Cifar10Dataset(dataset_mixin.DatasetMixin):
         return len(self.dset)
 
     def get_example(self, i):
-        return self.dset[i][0] * 2. - 1., self.dset[i][1]
-
+        image = np.asarray(self.dset[i][0] / 128. - 1., np.float32)
+        image += np.random.uniform(size=image.shape, low=0., high=1. / 128)
+        return image, self.dset[i][1]

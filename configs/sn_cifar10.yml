@@ -27,7 +27,7 @@ models:
 
 dataset:
   dataset_fn: datasets/cifar10.py
-  dataset_name: Cifar10Dataset
+  dataset_name: CIFAR10Dataset
   args:
     test: False
 
@@ -41,6 +41,6 @@ updater:
   name: Updater
   args:
     n_dis: 5
-    n_gen_samples: 64
+    n_gen_samples: 128
     conditional: True
     loss_type: hinge

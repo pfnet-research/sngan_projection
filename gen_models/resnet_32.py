@@ -32,9 +32,10 @@ class ResNetGenerator32(chainer.Chain):
 
     def __call__(self, batchsize=64, z=None, y=None):
         if z is None:
-            z = self.sample_z(batchsize)
+            z = sample_continuous(self.dim_z, batchsize, distribution=self.distribution, xp=self.xp)
         if y is None:
-            y = self.sample_y(batchsize) if self.n_classes > 0 else None
+            y = sample_categorical(self.n_classes, batchsize, distribution="uniform",
+                                   xp=self.xp) if self.n_classes > 0 else None
         if (y is not None) and z.shape[0] != y.shape[0]:
             raise ValueError('z.shape[0] != y.shape[0]')
         h = z
