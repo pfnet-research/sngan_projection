@@ -1,3 +1,4 @@
+# conditional CIFAR10 generation with SN and projection discriminator
 batchsize: 64
 iteration: 50000
 iteration_decay_start: 0
@@ -10,7 +11,7 @@ evaluation_interval: 1000
 models:
   generator:
     fn: gen_models/resnet_32.py
-    name: ResNetGenerator32
+    name: ResNetGenerator
     args:
       dim_z: 128
       bottom_width: 4
@@ -20,7 +21,7 @@ models:
 
   discriminator:
       fn: dis_models/snresnet_32.py
-      name: SNResNetDiscriminator32
+      name: SNResNetProjectionDiscriminator
       args:
         ch: 128
         n_classes: 10
