@@ -12,7 +12,7 @@ import multiprocessing
 
 sys.path.append(os.path.dirname(__file__))
 
-from evaluation import sample_generate_conditional, sample_generate_light, calc_inception
+from evaluation import sample_generate, sample_generate_conditional, sample_generate_light, calc_inception
 import source.yaml_utils as yaml_utils
 
 
@@ -88,7 +88,8 @@ def main():
                              alpha=config.adam['alpha'], beta1=config.adam['beta1'], beta2=config.adam['beta2'])
     opts = {"opt_gen": opt_gen, "opt_dis": opt_dis}
     # Dataset
-    if config['dataset']['dataset_name'] != 'CIFAR10Dataset': # Cifar10 dataset handler does not take "root" as argument.
+    if config['dataset'][
+        'dataset_name'] != 'CIFAR10Dataset':  # Cifar10 dataset handler does not take "root" as argument.
         config['dataset']['args']['root'] = args.data_dir
     if comm.rank == 0:
         dataset = yaml_utils.load_dataset(config)
@@ -122,9 +123,14 @@ def main():
         trainer.extend(extensions.LogReport(keys=report_keys,
                                             trigger=(config.display_interval, 'iteration')))
         trainer.extend(extensions.PrintReport(report_keys), trigger=(config.display_interval, 'iteration'))
-        trainer.extend(sample_generate_conditional(gen, out, n_classes=gen.n_classes),
-                       trigger=(config.evaluation_interval, 'iteration'),
-                       priority=extension.PRIORITY_WRITER)
+        if gen.n_classes > 0:
+            trainer.extend(sample_generate_conditional(gen, out, n_classes=gen.n_classes),
+                           trigger=(config.evaluation_interval, 'iteration'),
+                           priority=extension.PRIORITY_WRITER)
+        else:
+            trainer.extend(sample_generate(gen, out),
+                           trigger=(config.evaluation_interval, 'iteration'),
+                           priority=extension.PRIORITY_WRITER)
         trainer.extend(sample_generate_light(gen, out, rows=10, cols=10),
                        trigger=(config.evaluation_interval // 10, 'iteration'),
                        priority=extension.PRIORITY_WRITER)
